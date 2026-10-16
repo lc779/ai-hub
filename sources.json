@@ -1,0 +1,54 @@
+{
+  "dead": [
+    "https://registry.npm.taobao.org",
+    "https://ghproxy.cc/"
+  ],
+  "github_prefixes": [
+    {
+      "note": "",
+      "url": "https://gh-proxy.com/"
+    },
+    {
+      "note": "",
+      "url": "https://ghfast.top/"
+    },
+    {
+      "note": "",
+      "url": "https://ghproxy.net/"
+    }
+  ],
+  "issued_at": 1792184373,
+  "next_keys": [
+    "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo="
+  ],
+  "node_dist": [
+    {
+      "note": "阿里 npmmirror",
+      "url": "https://npmmirror.com/mirrors/node"
+    },
+    {
+      "note": "清华 TUNA",
+      "url": "https://mirrors.tuna.tsinghua.edu.cn/nodejs-release"
+    },
+    {
+      "note": "阿里云镜像站",
+      "url": "https://mirrors.aliyun.com/nodejs-release"
+    }
+  ],
+  "npm": [
+    {
+      "note": "阿里 npmmirror",
+      "url": "https://registry.npmmirror.com"
+    },
+    {
+      "note": "腾讯云",
+      "url": "https://mirrors.cloud.tencent.com/npm"
+    },
+    {
+      "note": "华为云",
+      "url": "https://repo.huaweicloud.com/repository/npm"
+    }
+  ],
+  "schema": 1,
+  "serial": 1
+}

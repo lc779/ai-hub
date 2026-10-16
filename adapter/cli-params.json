@@ -1,0 +1,334 @@
+{
+  "cli_specs": [],
+  "issued_at": 1792183377,
+  "next_keys": [
+    "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo="
+  ],
+  "params": [
+    {
+      "always_env": [],
+      "always_env_why": "",
+      "always_flags": [],
+      "always_flags_why": "",
+      "api_key": {
+        "how": "Env",
+        "value": "ANTHROPIC_AUTH_TOKEN"
+      },
+      "base_url": {
+        "how": "Env",
+        "value": "ANTHROPIC_BASE_URL"
+      },
+      "cli": "claude",
+      "config_file": "~/.claude/settings.json",
+      "context_window": {
+        "how": "Env",
+        "value": "CLAUDE_CODE_MAX_CONTEXT_TOKENS"
+      },
+      "effort": {
+        "how": "Env",
+        "value": "CLAUDE_CODE_EFFORT_LEVEL"
+      },
+      "evidence": "输出上限裁决（1.0.23）：**原生 32000、无自适应**（二进制 2.1.289 里 `uv=32000` 是未收录模型的默认、`EN=128000` 是显式值才够得着的硬上限）—— 端点自报 ≥ 32000 才注入。\n             Anthropic 官方环境变量文档 + 0.7.0 实测：settings.json 的 env 块优先级高于进程环境变量。**地址必须去尾**：客户端拼的是「地址 + /v1/messages」，不去尾就是 /v1/v1/messages。两处取证：① 二进制的 buildURL 是朴素的 new URL(baseURL + path)，只去重两端斜杠，没有任何「已经带了 /v1」的判断；② 活体实测（假 key，指向本地 mock 端点）：ANTHROPIC_BASE_URL=http://127.0.0.1:8791/v1 时它真发出的是 POST /v1/v1/messages?beta=true，换成 http://127.0.0.1:8791 后同一份配置发出 POST /v1/messages?beta=true。所以由 launch::build_env 交给它之前先过 cli_protocol::anthropic_prefix —— 用户不可能知道这件事，填 OpenAI 兼容那种带 /v1 的地址是最自然的写法。**免登录**：ANTHROPIC_AUTH_TOKEN（网关令牌）走 env 块注入，优先级高于 OAuth 会话，真实 ~/.claude 下也无需登录即用（0.8.15 活体验证）。",
+      "max_output": {
+        "how": "Env",
+        "value": "CLAUDE_CODE_MAX_OUTPUT_TOKENS"
+      },
+      "model": {
+        "how": "Env",
+        "value": "ANTHROPIC_MODEL"
+      },
+      "native_output_ceiling": 32000
+    },
+    {
+      "always_env": [],
+      "always_env_why": "",
+      "always_flags": [],
+      "always_flags_why": "",
+      "api_key": {
+        "how": "Env",
+        "value": "KIMI_MODEL_API_KEY"
+      },
+      "base_url": {
+        "how": "Env",
+        "value": "KIMI_MODEL_BASE_URL"
+      },
+      "cli": "kimi",
+      "config_file": "~/.kimi-code/config.toml（effort 用户自定义探测）；<KIMI_CODE_HOME>/mcp.json（MCP 落点，0.9.0 起 AI Hub 按名合并写入）",
+      "context_window": {
+        "how": "Env",
+        "value": "KIMI_MODEL_MAX_CONTEXT_SIZE"
+      },
+      "effort": {
+        "how": "Env",
+        "value": "KIMI_MODEL_THINKING_EFFORT"
+      },
+      "evidence": "输出上限裁决（1.0.23）：未发现原生提升/恢复；不注入时预算取模型 `max_context_tokens`（未知则 32000），注入值作为 `hardCap` 经 `max_completion_tokens` 进请求 —— 注入是「给足」方向，不设裁决。\n             v0.42.0 dist/main.mjs：applyEnvModelConfig() 读 KIMI_MODEL_*；KIMI_MODEL_MAX_OUTPUT_SIZE 与 KIMI_MODEL_MAX_CONTEXT_SIZE 出现在同一函数内；0.43.1 实测：ThinkingConfigSchema={enabled,effort,forcedEffort,keep}，effort / forcedEffort 都在 [thinking] 段；env KIMI_MODEL_THINKING_EFFORT注入为 forcedEffort（旧字段名 forced_effort 已不存在）；KIMI_MODEL_PROVIDER_TYPE 在二进制与 ALLOWED_TYPES（kimi/anthropic）里存在，=anthropic 时在给定 base 后追加 /v1/messages（实测 deepseek 网关 200）",
+      "max_output": {
+        "how": "Env",
+        "value": "KIMI_MODEL_MAX_OUTPUT_SIZE"
+      },
+      "model": {
+        "how": "Env",
+        "value": "KIMI_MODEL_NAME"
+      },
+      "native_output_ceiling": null
+    },
+    {
+      "always_env": [],
+      "always_env_why": "",
+      "always_flags": [],
+      "always_flags_why": "",
+      "api_key": {
+        "how": "ConfigViaEnv",
+        "value": {
+          "env": "MIMOCODE_CONFIG_CONTENT",
+          "field": "provider.<id>.options.apiKey"
+        }
+      },
+      "base_url": {
+        "how": "ConfigViaEnv",
+        "value": {
+          "env": "MIMOCODE_CONFIG_CONTENT",
+          "field": "provider.<id>.options.baseURL"
+        }
+      },
+      "cli": "mimo",
+      "config_file": "~/.config/mimocode/mimocode.jsonc（已改走注入，不写它）",
+      "context_window": {
+        "how": "ConfigViaEnv",
+        "value": {
+          "env": "MIMOCODE_CONFIG_CONTENT",
+          "field": "provider.<id>.models.<模型>.limit.context"
+        }
+      },
+      "effort": {
+        "how": "ConfigViaEnv",
+        "value": {
+          "env": "MIMOCODE_CONFIG_CONTENT",
+          "field": "provider.<id>.models.<模型>.options.reasoningEffort"
+        }
+      },
+      "evidence": "输出上限裁决（1.0.23）：这个 env 是**封顶不是覆盖**（`min(limit.output, env)`，env 不设时默认 32000），不注入反而更差；大模型档 128000 与它的关系未查实，故不设裁决（保守＝保持现状）。\n             v0.1.14 实测（mock 端点抓请求体）：MIMOCODE_CONFIG_CONTENT 优先级最高（实测压过 MIMOCODE_CONFIG / 项目级 mimocode.json / 全局 ~/.config/mimocode/mimocode.jsonc），且是**深合并**不是替换（env 只给 apiKey 时，文件里的 baseURL 照样生效）。格式是 **JSONC**（注释、尾逗号都吃）。实测生效的位置：顶层 model / small_model、provider.<id>.options.{baseURL,apiKey}、models.<m>.limit.{context,output}、models.<m>.options.reasoningEffort、models.<m>.variants.<n>.reasoningEffort（需配 --variant）。实测**否定**：顶层 reasoningEffort（schema 列为 Unrecognized keys）、provider.<id>.apiKey（放 provider 直下 → 请求里**完全没有 authorization 头**）、provider.<id>.baseURL/baseUrl（报 TypeError: \"undefined/chat/completions\"）；`model` 写成 provider/model/variant 时 variant **不生效**。⚠️ `--variant` 传一个不存在的名字是**静默忽略、exit 0、不报错**，reasoning effort 悄悄退回 options 的值 —— 所以我们不用 --variant，改用恒定生效的 options.reasoningEffort。⚠️ MIMOCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX 是**封顶不是覆盖**：limit.output=6543 + env=9999 → max_tokens=6543；+ env=1000 → 1000。limit 对象要么不写、要么 context 和 output 都写（只给一个会报缺另一个）。⚠️ 上下文窗口是**纯客户端预算**，请求体里从不出现，只能靠 CLI 自报的解析结果佐证（`mimo models <prov>` 显示 window/compacts at）——按\"请求体出现才算\"的标准这条**未确认**，表里不写\"已生效\"。",
+      "max_output": {
+        "how": "Env",
+        "value": "MIMOCODE_EXPERIMENTAL_OUTPUT_TOKEN_MAX"
+      },
+      "model": {
+        "how": "ConfigViaEnv",
+        "value": {
+          "env": "MIMOCODE_CONFIG_CONTENT",
+          "field": "model（\"provider/model\" 格式，model 段用模型条目的 key）"
+        }
+      },
+      "native_output_ceiling": null
+    },
+    {
+      "always_env": [],
+      "always_env_why": "",
+      "always_flags": [
+        "--auth-type",
+        "{auth_type}"
+      ],
+      "always_flags_why": "--auth-type：不传它会**直接退出**（\"No auth type is selected\"）；更要紧的是，用户环境里只要存在 ANTHROPIC_BASE_URL/ANTHROPIC_API_KEY（Claude Code 用户几乎必然有），qwen 会自动选中 anthropic 协议，改用 Anthropic Messages 格式发请求到错的地方 —— 实测复现过。**它的值必须跟端点协议一致**，所以表里存的是 {auth_type} 占位符，由 build_argv 按 agent 实际协议替换。**这一行原先还有 `--bare`，现在去掉了** —— 本表里唯一一次主动放松，理由记全：当初带它的名义是\"防端点劫持\"，因为 `-m` 的模型名一旦命中settings.json 里某条 modelProviders 的 id，那条的 baseUrl 会**压过**--openai-base-url，请求打到用户以前配的地址去（实测是整个跳过settings.json，不只是优先级问题：不给 --openai-base-url 时它回落到编译进二进制的默认地址，而 settings 里那条明明在）。那条「命中 id 的 entry」现在由 [`merge_qwen_entry`] **原位替换**：id 逐字等于 `-m`、baseUrl 就是本次要用的地址 —— 劫持的对象不存在了。而 `--bare` 的代价是实打实的两项，都会让模型变笨：① 推理力度/上下文窗口一个字都进不去；② **工作区的上下文文件（QWEN.md）不进 system prompt**（这条 help 里没写，只在实测里露出来）—— 关掉它等于让模型不知道用户的项目规范。它不是 --safe-mode（那个关 context files/hooks/extensions/skills/MCP，**但不动** settings.json 里的模型配置 —— 实测 --safe-mode 下modelProviders 的地址和 reasoning_effort 照常生效）。0.8.15 撤销 QWEN_HOME 隔离：qwen 读真实的 `~/.qwen/settings.json`，用户自己的扩展/记忆/设置原样生效（与 claude 同一原则）。写盘由 [`merge_qwen_entry`] 按 entry id 原位合并，用户的其余\n             entry 一个不碰；`QWEN_OWNED_PATHS` 那套整篮替换因此**废除**。",
+      "api_key": {
+        "how": "Env",
+        "value": "AIHUB_QWEN_KEY"
+      },
+      "base_url": {
+        "how": "Flag",
+        "value": "--openai-base-url"
+      },
+      "cli": "qwen",
+      "config_file": "~/.qwen/settings.json（只按 entry id 原位合并我们自己那条，其余不碰）",
+      "context_window": {
+        "how": "ConfigOnly",
+        "value": "modelProviders.<协议>[].generationConfig.contextWindowSize"
+      },
+      "effort": {
+        "how": "ConfigOnly",
+        "value": "modelProviders.<协议>[].generationConfig.reasoning.effort（Anthropic 篮子）/ generationConfig.extra_body.reasoning_effort（OpenAI 篮子）"
+      },
+      "evidence": "输出上限裁决（1.0.23）：**原生上限 64000**（`DEFAULT_OUTPUT_TOKEN_LIMIT=32000`、`ESCALATED_MAX_TOKENS=64000`）。注入该变量会让 `hasUserMaxTokensOverride` 为真，**整条「截断后提升 + 跨轮恢复」被跳过**（官方 help 原话 \"Disables automatic escalation when set.\"）—— 端点自报 ≥ 64000 才注入。源码侧：chunk-3UXUOFO6.js:175-206（AUTH_ENV_MAPPINGS 按 authType 分组）、chunk-MF6E7FSA.js:307-350（getAuthTypeFromEnv）、chunk-CXTPVBFA.js:281（QWEN_CODE_MAX_OUTPUT_TOKENS）、chunk-ZU47FBOC.js（schema 注册表）。实测侧（qwen-code 0.23.3，mock 端点抓请求体）：`-m/--model`、`--openai-base-url`、`--openai-api-key` 三者**全部压过同名环境变量**；不传 --auth-type 直接 exit 1；环境里有 ANTHROPIC_* 时会走错协议；没 key 直接 exit 1（\"缺少 OpenAI 兼容认证的 API Key\"）；QWEN_CODE_MAX_OUTPUT_TOKENS 确实改得动 max_tokens（1234/4321/9999 都验过），且 extra_body.max_tokens 会压过它；推理力度**按协议落在两个不同的键上，且互相不认**（两篮分开复跑，mock 抓请求体）：`extra_body.reasoning_effort` 只在 openai 篮生效（逐字透传、零校验：low/medium/high/xhigh/minimal 乃至 banana 都原样发出）；`reasoning.effort` 只在 anthropic 篮生效（下一段是那一轮的实测）。交叉验证过：anthropic 篮里写 extra_body → 请求体里**一个字段都没多**，thinking 用的还是默认值；openai 篮里写 reasoning → 顶层键只剩model/system/messages/tools/max_tokens/temperature。（旧记录说 reasoning.effort 会\"发成嵌套的 reasoning:{effort}\"，本轮同条件复跑**复现不出来** —— openai 与 openai-responses 两条路都没有任何多余字段。以本轮为准，那条说法作废。）contextWindowSize 从不出现在请求体里（要看得加 `-d`，读 debug 日志的`[COMPRESSION] ... contextLimit=` 那行）。**陷阱：QWEN_CODE_MODEL 全仓只有写入点、没有读取点**（实测复核：设了它 + `-m qwen3-max`，请求体仍是 qwen3-max），这正是\"看着配好了、实际没生效\"的典型。另注：模型名 env 会被主动剔除（chunk-MF6E7FSA.js:376），所以 settings.json 里有同名条目时 env 打不过它 —— 这也是改用参数的原因。0.23.3 深挖（同一套 mock 抓包，settings 侧和 CLI 侧各一个端点，谁收到就是谁赢）：`--bare` 与 settings.json **完全互斥**，两个独立证据 —— 不给 --openai-base-url时回落到**编译进二进制的默认地址**而不是 settings 里那条；settings.json 写成非法 JSON 时带 --bare **连\"已重置\"的告警都不出现**（压根没解析）。所以 --bare 下 extra_body / reasoning / contextWindowSize 一次都没进过请求体。`--bare` 还**关掉了工作区上下文文件**（QWEN.md 不进 system prompt），这条 help 里没写、只在实测里露出来。`--safe-mode` 与它正交：**不动** settings.json 的模型配置（地址和reasoning_effort 照常生效），只关 context files/hooks/extensions/skills/MCP。顶层 `model.reasoningEffort`（schema 里的一等公民，`/effort` 命令写的就是它）**不能当通道用**：它发嵌套形状、且按模型能力裁剪（未知模型上 max→xhigh）、minimal 被静默丢弃 —— 拿不到\"任意值原样透传\"。`-c` 是 `--continue`（继续上次会话），**不是**配置覆盖；`--config` 不存在。二进制里约 230 个 QWEN_* 变量全枚举过，没有一个涉及 effort/thinking/context/window。隔离手段：`QWEN_HOME` 能整个替换 `~/.qwen`（**不是** `QWEN_DIR` —— 那是项目内 .qwen 文件夹的名字常量）。—— 以上 `--bare` 那几条是**当初选它的依据**，现在不用它了，所以它们的角色从\"当前行为\"变成\"为什么当初那么选\"，仍旧都成立。`QWEN_HOME` 隔离实测（qwen-code 0.23.3，私有目录指向临时目录）：用户真实 `~/.qwen` 1297 个文件的 sha256 与基线**逐字节一致**、一个都没挪；空目录能正常 bootstrap；**不加 `--bare`** 时 effort（抓包看请求体里的`reasoning_effort`）+ `contextWindowSize`（`-d` 的 `[COMPRESSION]` 行）+ `QWEN.md` 三者同时拿到 —— 这正是去掉 `--bare` 换来的。`modelProviders` 条目的形状也是那一轮实测定的：`id` **必须逐字等于 `-m`**（不命中时整条失效、baseUrl 回落到编译进二进制的地址）；`baseUrl` 必填；`envKey` 填**环境变量名**；`extra_body` 与 `contextWindowSize` **必须**待在同一条目里（命中条目时顶层 `model.generationConfig` 被整体丢弃并 warning）；qwen 会回写我们那份 settings.json（加 `$version`）。anthropic 篮子单独一轮（`--auth-type anthropic`，mock 抓请求体）：`generationConfig.reasoning` 是**唯一**生效的推理通道 —— 官方文档原话\"The Anthropic and Gemini converters always honor it\"。实测：`{effort:\"high\"}` → 请求体 `output_config:{effort:\"high\"}` **且**`thinking.budget_tokens` 跟着档位变（low 16000 / high 64000 / 不给 effort 时32000，与打包进来的 SDK 里那张表逐字对上）；`{budget_tokens:45678}` →`thinking.budget_tokens=45678`（无 output_config）；`false` → 连 `thinking`都不出现；越界档位（banana）**不报错**，被 clampReasoningEffort 钳到 high。**地址形态**：anthropic 客户端是 `new URL(base + \"/v1/messages\")` 的朴素拼接（打包进来的 @anthropic-ai/sdk `buildURL`；Claude Code 的原生二进制里那份逐字相同），所以 base 结尾带 `/v1` 就会打成 `/v1/v1/messages` —— 本轮**复现过**（mock 收到的路径就是它），把 base 换成不带 `/v1` 的前缀形态后立刻变成 `/v1/messages`。openai 那支拼的是 `/chat/completions`，`/v1`必须留着 —— 同一个地址栏的值两种客户端要的形态正好相反，所以两篮的baseUrl 是**按目的地**算出来的（`cli_protocol::anthropic_prefix`）。Qwen 自家 `/auth` 向导与官方 docs 把 anthropic 的 baseUrl 预填成`https://api.anthropic.com/v1` —— 按它自己的代码那会打成 `/v1/v1/messages`：上游文档与实现冲突，我们**按实现**走。源码核实（同一版本，`chunks/chunk-N7VWZDWW.js` `chunk-ERU3SDXT.js`）：`modelProviders` 的第一层键**就是协议名** —— `resolveProviderProtocol`拿它过 `validateAuthTypeKey`，合法值是 AuthType 全部取值，**0.23.3 是 6 个**（qwen-oauth / openai / openai-responses / vertex-ai / anthropic / gemini），非法键的条目会被跳过并告警；模型**按协议分桶**存（`getResolvedModel(authType, modelId, modelBaseUrl)`，主协议桶找不到才去别桶扫；跨桶回退那张 `allAuthTypes` 列表里**没有 `openai-responses`** —— 源码实测），所以不相干的那篮是死数据。`--auth-type` 的取值集合与它完全一致 —— 这是两篮都写的依据。已知边界（本轮顺带撞见，未深挖）：`--auth-type openai-responses` 下`envKey` **不被读取** —— 它要 settings.security.auth.apiKey 或OPENAI_API_KEY，所以那条路上我们的密钥注入接不上。我们不产生这个取值（protocol_of 只会回 openai / anthropic），仅记在这里备查。",
+      "max_output": {
+        "how": "Env",
+        "value": "QWEN_CODE_MAX_OUTPUT_TOKENS"
+      },
+      "model": {
+        "how": "Flag",
+        "value": "--model"
+      },
+      "native_output_ceiling": 64000
+    },
+    {
+      "always_env": [],
+      "always_env_why": "",
+      "always_flags": [],
+      "always_flags_why": "",
+      "api_key": {
+        "how": "ConfigOnly",
+        "value": "providers.<id>.api_key"
+      },
+      "base_url": {
+        "how": "ConfigOnly",
+        "value": "providers.<id>.base_url"
+      },
+      "cli": "crush",
+      "config_file": "%LOCALAPPDATA%\\crush\\crush.json",
+      "context_window": {
+        "how": "ConfigOnly",
+        "value": "providers.<id>.models[].context_window（官方 schema 里必填）"
+      },
+      "effort": {
+        "how": "ConfigOnly",
+        "value": "providers.<id>.provider_options.reasoning_effort"
+      },
+      "evidence": "输出上限裁决（1.0.23）：`default_max_tokens` 是模型目录自带的字段（本机二进制内嵌目录里就有 `context_window=1000000 / default_max_tokens=384000` 那条），未发现原生提升机制 —— 不设裁决。\n             crush v0.93.1 实测（mock 端点抓请求体）：providers.<id>.{type,base_url,api_key}、provider_options.reasoning_effort、extra_body、models[].{id,name,default_max_tokens}、顶层 models.large|small.{provider,model} —— 全部确认生效。**models[].default_max_tokens → 请求体 max_tokens**（多组值验过）。**模型级 reasoning_effort 静默无效**（openai-compat 与 openai 两种 type 都试了，带 can_reason:true 也不行；crushrc 的 model add --reasoning-effort 同样不进请求体）。**options.models 是假的**：large/small 对调后主请求仍用数组第一个模型。**models[].context_window 不进请求体**（设 100 后请求体无变化、无警告）——但官方 schema 把它列为 Model 的 **required** 字段，与 Codex 的model_context_window 同性质（客户端预算），**不能**据此认定无效。未验证：models[].max_tokens、can_reason、extra_headers、模型级 temperature（实测不生效，要注入请求体键得用 extra_body）。extra_body 仅对 openai / openai-compat 类型可用（schema 原话）。环境变量侧 CRUSH_ 一族只有路径/调试开关，无一是模型参数。⚠️ crush.json 的未知字段**静默忽略不报错**，别拿'没报错'当生效证据。",
+      "max_output": {
+        "how": "ConfigOnly",
+        "value": "providers.<id>.models[].default_max_tokens"
+      },
+      "model": {
+        "how": "ConfigOnly",
+        "value": "models.large.{provider,model}（两者缺一不可）"
+      },
+      "native_output_ceiling": null
+    },
+    {
+      "always_env": [],
+      "always_env_why": "",
+      "always_flags": [],
+      "always_flags_why": "",
+      "api_key": {
+        "how": "ConfigOnly",
+        "value": "llm-pi-ai.providers.<id>.apiKeyEnv（环境变量名，值不落盘）"
+      },
+      "base_url": {
+        "how": "ConfigOnly",
+        "value": "llm-pi-ai.providers.<id>.baseURL"
+      },
+      "cli": "dsh",
+      "config_file": "$DSH_HOME/profiles/web/cordis.patch.yml",
+      "context_window": {
+        "how": "ConfigOnly",
+        "value": "llm-pi-ai.providers.<id>.models[].contextWindow"
+      },
+      "effort": {
+        "how": "ConfigOnly",
+        "value": "llm-pi-ai.providers.<id>.models[].reasoningEfforts"
+      },
+      "evidence": "输出上限裁决（1.0.23）：**未查实** —— 本机 `@deepseek-ai/dsh` 包里只查到 ACP 协议的 `stop_reason=max_tokens`，没查到 `maxTokens` 的消费点，也没查到任何自适应。不设裁决（保持现状，等一次抓包实测）。\n             官方文档核实（未做 mock 抓包实测，证据等级低于本表其它条目）：`apps/cli/README.md` 的 profiles 与 layer 优先级、`docs/user/guide/providers.md` 的 apiKeyEnv / api 三值 / models[].id / reasoningEfforts 映射 / compat.thinkingFormat、`apps/cli/reference/README.md` 的 patch 语义与 `--patch` overlay。**patch 是整行替换不是深合并**（官方原话），写盘必须读-改-写。`$DSH_HOME` 默认 `~/.dsh`。⚠️ npm 上**只有预发布版本**（实测 dist-tags: latest=0.1.5-rc.3）。⚠️ 官方标注 developer preview、**会有破坏性变更** —— 上游一改，这里的键名就可能失效，届时应以 `dsh --dump-config` 为准。未验证：max_output / context_window 在 YAML 里的键名（文档只说在 Models 页面可编辑，没给键名，所以这两项标 No 而不是猜一个）。",
+      "max_output": {
+        "how": "ConfigOnly",
+        "value": "llm-pi-ai.providers.<id>.models[].maxTokens"
+      },
+      "model": {
+        "how": "ConfigOnly",
+        "value": "llm-pi-ai.providers.<id>.models[].id"
+      },
+      "native_output_ceiling": null
+    },
+    {
+      "always_env": [],
+      "always_env_why": "",
+      "always_flags": [],
+      "always_flags_why": "",
+      "api_key": {
+        "how": "ConfigViaEnv",
+        "value": {
+          "env": "OPENCODE_CONFIG_CONTENT",
+          "field": "provider.<id>.options.apiKey"
+        }
+      },
+      "base_url": {
+        "how": "ConfigViaEnv",
+        "value": {
+          "env": "OPENCODE_CONFIG_CONTENT",
+          "field": "provider.<id>.options.baseURL"
+        }
+      },
+      "cli": "opencode",
+      "config_file": "~/.config/opencode/opencode.json",
+      "context_window": {
+        "how": "ConfigViaEnv",
+        "value": {
+          "env": "OPENCODE_CONFIG_CONTENT",
+          "field": "provider.<id>.models.<m>.limit.context"
+        }
+      },
+      "effort": {
+        "how": "ConfigViaEnv",
+        "value": {
+          "env": "OPENCODE_CONFIG_CONTENT",
+          "field": "agent.<name>.model + agent.<name>.variant（配 models.<m>.variants.<n>）"
+        }
+      },
+      "evidence": "输出上限裁决（1.0.23）：`limit.output` 还参与推导 thinking 预算（`min(16000, output/2-1)` / `min(31999, output-1)`），而不注入时模型目录不认网关私有别名（`max_output_length` 缺失 → 0）—— 注入是「给足」方向，不设裁决。\n             opencode.exe 内嵌 JS：loadApiKey 实现 `if(typeof J===\"string\")return J; ... J=process.env[Q]`（显式配置的 apiKey 直接返回，为空才读环境变量）；by() 函数 `Math.min($.limit.output, Z)||Z`（Z 默认 32000）即输出上限钳制；variants 由 reasoning_options 派生 `Object.fromEntries(...values.map(K=>[K,{reasoningEffort:K}]))`；config schema（zod）中 provider.<id>.options.{apiKey,baseURL}、models.<m>.limit.{context,output}。环境变量侧 grep 'OPENCODE_' 得到 81 个，模型参数只有 OUTPUT_TOKEN_MAX 一个；**无 OPENCODE_MODEL**。注入路线**已实测**（2026-09-11）：`OPENCODE_CONFIG_CONTENT` 在 global / OPENCODE_CONFIG / 项目级之后 apply 故优先（`opencode debug config` 实测 CONTENT 胜出）；且经它注入自定义 provider（npm/baseURL/apiKey/limit/variant）后 `debug config` 全部解析成功。",
+      "max_output": {
+        "how": "ConfigViaEnv",
+        "value": {
+          "env": "OPENCODE_CONFIG_CONTENT",
+          "field": "provider.<id>.models.<m>.limit.output"
+        }
+      },
+      "model": {
+        "how": "ConfigViaEnv",
+        "value": {
+          "env": "OPENCODE_CONFIG_CONTENT",
+          "field": "model（\"provider/model\" 格式）"
+        }
+      },
+      "native_output_ceiling": null
+    },
+    {
+      "always_env": [],
+      "always_env_why": "",
+      "always_flags": [
+        "-c",
+        "model_provider='aihub'",
+        "-c",
+        "model_providers.aihub.name='AI Hub'",
+        "-c",
+        "model_providers.aihub.wire_api='responses'",
+        "-c",
+        "model_providers.aihub.env_key='AIHUB_CODEX_KEY'"
+      ],
+      "always_flags_why": "四条 `-c` 逐条的理由：① `model_provider` —— 不指定的话 Codex 会用**内置的 openai provider**，请求打到 api.openai.com，用户只会看到'连不上'；② `model_providers.aihub.name` —— 只是显示名，让用户在 Codex 自己的界面里认得出这是 AI Hub 配的；③ `wire_api` —— 实测**唯一合法值**就是 responses（\"chat\" 被硬拒：\"no longer supported\"，指向官方 discussion/7782），且不写时默认也是它，显式写出来是为了将来默认值变了不会静默换掉我们实际在用的协议；④ `model_providers.aihub.env_key` —— 让 API key 走环境变量而不是命令行，命令行上的密钥会落进启动脚本。",
+      "api_key": {
+        "how": "Env",
+        "value": "AIHUB_CODEX_KEY"
+      },
+      "base_url": {
+        "how": "KeyValue",
+        "value": {
+          "flag": "-c",
+          "key": "model_providers.aihub.base_url",
+          "quote": true
+        }
+      },
+      "cli": "codex",
+      "config_file": "~/.codex/config.toml（AI Hub 不写它，只经 -c 当次覆盖）",
+      "context_window": {
+        "how": "No"
+      },
+      "effort": {
+        "how": "KeyValue",
+        "value": {
+          "flag": "-c",
+          "key": "model_reasoning_effort",
+          "quote": true
+        }
+      },
+      "evidence": "v0.154.0 codex.exe 实测：`-c 键=值` 支持嵌套点路径，与 config.toml **按 key 合并**且 `-c` 优先；env_key 缺失时**硬报错、零请求**；`--strict-config` 递归校验键名/类型；`wire_api` 只有 \"responses\" 一个合法值；设 OPENAI_BASE_URL 后仍打 api.openai.com（**被忽略**）；15 个候选名全判 unknown + 二进制零命中；0.8.0 再用官方 config-schema.json 与上游 Rust 源码复核：出站请求结构体 `ResponsesApiRequest` 与 `ConfigToml` **都没有 max_output_tokens 字段** —— 协议层表达不了，不只是文档没写；且 `-c model_max_output_tokens=…` 是**静默忽略**、不报错（别指望试出来）；0.9.1 更正：`model_context_window` 键在 codex 二进制里**不存在**（0.9.0 实机 `_status.json` drift_total:1 实锤），0.8.15 的「生效但纯客户端」结论证伪 —— 注入被静默忽略。上下文窗口改由模型 catalog 承担 （`-c model_catalog_json` 的 max_context_window，本表 context_window 标 `No`，诊断如实说「换载体」）；model_reasoning_effort 几乎不校验取值（写错不会被发现，只有空串被拒）。0.8.15 实证（mock 抓请求 + 网关探活）：**base 后追加的是 `/responses`**（base=…/anthropic 时发出 POST /anthropic/responses），所以 base 要先过 `openai_prefix` 归一化（结尾完整段 anthropic→v1，deepseek 网关 /v1/responses=200）；`wire_api='chat'` 被硬拒（\"no longer supported\"，官方 discussion/7782），responses 是**唯一**选择 —— 指向普通 Chat Completions 端点会硬失败；**companion 程序缺失时报 \"Windows 找不到文件 codex-windows-sandbox-setup.exe\"**：更新器必须连同 command-runner / sandbox-setup / responses-api-proxy /code-mode-host 一起装（见 cli_update::CODEX_COMPANIONS）。0.9.0 补缺口：上游资产名只有 sandbox-setup 带 `windows` 中缀，0.8.15~0.8.22 的挑选器只认带中缀的形状，另外三个组件从未装上；0.9.0 起两种形状都认，落盘名按运行时引用名（只有 sandbox-setup带中缀）恢复。",
+      "max_output": {
+        "how": "No"
+      },
+      "model": {
+        "how": "Flag",
+        "value": "--model"
+      },
+      "native_output_ceiling": null
+    }
+  ],
+  "schema": 1,
+  "serial": 1
+}
