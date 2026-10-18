@@ -3,6 +3,7 @@
     "https://registry.npm.taobao.org",
     "https://ghproxy.cc/"
   ],
+  "expires_at": 1838903031,
   "github_prefixes": [
     {
       "note": "",
@@ -17,7 +18,7 @@
       "url": "https://ghproxy.net/"
     }
   ],
-  "issued_at": 1792184373,
+  "issued_at": 1792247031,
   "next_keys": [
     "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo="
   ],
@@ -50,5 +51,5 @@
     }
   ],
   "schema": 1,
-  "serial": 1
+  "serial": 2
 }
