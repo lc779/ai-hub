@@ -3,7 +3,7 @@
     "https://registry.npm.taobao.org",
     "https://ghproxy.cc/"
   ],
-  "expires_at": 1807993386,
+  "expires_at": 1808054557,
   "github_prefixes": [
     {
       "note": "",
@@ -18,7 +18,7 @@
       "url": "https://ghproxy.net/"
     }
   ],
-  "issued_at": 1792441386,
+  "issued_at": 1792502557,
   "next_keys": [
     "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo="
   ],
@@ -51,15 +51,23 @@
     }
   ],
   "schema": 1,
-  "serial": 3,
+  "serial": 5,
   "app_update": {
     "repo": "lc779/ai-hub",
     "release_page": "https://github.com/lc779/ai-hub/releases",
-    "version": "1.0.84",
-    "name": "AI.Hub_1.0.84_x64-setup.exe",
-    "url": "https://github.com/lc779/ai-hub/releases/download/v1.0.84/AI.Hub_1.0.84_x64-setup.exe",
-    "sha256": "dcde640fe67264debde654f7ebafba9358b527b0b6b6b1e07054f67a5a1d07a5",
-    "size": 218473170,
-    "forced": false
-  }
+    "version": "1.0.85",
+    "name": "AI.Hub_1.0.85_x64-setup.exe",
+    "url": "https://github.com/lc779/ai-hub/releases/download/v1.0.85/AI.Hub_1.0.85_x64-setup.exe",
+    "sha256": "cb46cc9e3f125bdf6a88cdacd48ea35dc291a858221c29c87a88ca9b2f6496b5",
+    "size": 218457445,
+    "forced": false,
+    "release_id": "1.0.85",
+    "channel": "stable",
+    "state": "active",
+    "rollout": 100,
+    "min_app_version": "1.0.84",
+    "rollback": false,
+    "rollback_from": []
+  },
+  "telemetry_url": "https://aihub-admin.pages.dev"
 }
