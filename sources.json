@@ -3,7 +3,7 @@
     "https://registry.npm.taobao.org",
     "https://ghproxy.cc/"
   ],
-  "expires_at": 1808112294,
+  "expires_at": 1808150877,
   "github_prefixes": [
     {
       "note": "",
@@ -18,7 +18,7 @@
       "url": "https://ghproxy.net/"
     }
   ],
-  "issued_at": 1792560294,
+  "issued_at": 1792598877,
   "next_keys": [
     "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo="
   ],
@@ -51,23 +51,24 @@
     }
   ],
   "schema": 1,
-  "serial": 12,
+  "serial": 13,
   "app_update": {
     "repo": "lc779/ai-hub",
     "release_page": "https://github.com/lc779/ai-hub/releases",
-    "version": "1.0.89",
-    "name": "AI.Hub_1.0.89_x64-setup.exe",
-    "url": "https://github.com/lc779/ai-hub/releases/download/v1.0.89/AI.Hub_1.0.89_x64-setup.exe",
-    "sha256": "cbdd45af99f68133b2962fbd6c08ca4e12ea51fd166df019e2c27dedefa70849",
-    "size": 218479108,
+    "version": "1.0.90",
+    "name": "AI.Hub_1.0.90_x64-setup.exe",
+    "url": "https://github.com/lc779/ai-hub/releases/download/v1.0.90/AI.Hub_1.0.90_x64-setup.exe",
+    "sha256": "3d58920f53bfc2ce24035ca9944f656f67b0659ac025fb086cd06701a39e2878",
+    "size": 218556593,
     "forced": false,
-    "release_id": "1.0.89",
+    "release_id": "1.0.90",
     "channel": "stable",
     "state": "active",
     "rollout": 100,
     "min_app_version": "1.0.84",
     "rollback": false,
-    "rollback_from": []
+    "rollback_from": [],
+    "notes": "AI Hub 1.0.90：更新助手超时/看门狗与崩溃恢复；dsh 生命周期与锁冲突快速失败；一键发布直签/暂停/撤回/回滚；签名 seed 与信任锚强校验；更新面板合成层进度；遥测追加写与后台节流。"
   },
   "telemetry_url": "https://aihub-admin.pages.dev"
 }
