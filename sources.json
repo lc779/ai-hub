@@ -3,7 +3,7 @@
     "https://registry.npm.taobao.org",
     "https://ghproxy.cc/"
   ],
-  "expires_at": 1808173168,
+  "expires_at": 1808173377,
   "github_prefixes": [
     {
       "note": "",
@@ -18,7 +18,7 @@
       "url": "https://ghproxy.net/"
     }
   ],
-  "issued_at": 1792621168,
+  "issued_at": 1792621377,
   "next_keys": [
     "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo=",
     "k4-20261022:lGGMrAlb4VtPswPkOMisPYY05vMq3Ik2G12rCoVYEoU="
@@ -52,25 +52,25 @@
     }
   ],
   "schema": 1,
-  "serial": 18,
+  "serial": 19,
   "app_update": {
     "repo": "lc779/ai-hub",
-    "release_page": "https://github.com/lc779/ai-hub/releases/tag/v1.0.92",
-    "version": "1.0.92",
-    "name": "AI.Hub_1.0.92_x64-setup.exe",
-    "url": "https://github.com/lc779/ai-hub/releases/tag/v1.0.92",
-    "sha256": "bc4113fe37c361a3daa391e86920fc59108bc535f73e3cd057b04b86a453ff9d",
-    "size": 218556638,
+    "release_page": "https://github.com/lc779/ai-hub/releases/tag/v1.0.93",
+    "version": "1.0.93",
+    "name": "AI.Hub_1.0.93_x64-setup.exe",
+    "url": "https://github.com/lc779/ai-hub/releases/tag/v1.0.93",
+    "sha256": "b67a76edfd7b6a5fb60e36ce2c67741fb776e086be29aab8d1d288b747c85e66",
+    "size": 218571693,
     "forced": false,
-    "release_id": "1.0.92",
+    "release_id": "1.0.93",
     "channel": "stable",
     "state": "active",
     "rollout": 100,
     "min_app_version": "1.0.84",
     "rollback": false,
     "rollback_from": [],
-    "notes": "1.0.92：点「启动」立刻有反应（真实结局由 aihub://launch-state 事件补齐，失败原文直接显示在卡片上）；CLI 版本检查改一次批量往返，超时与离线分开文案。永不强制重启，任意旧版都可直更到本版。",
-    "asset_url": "https://github.com/lc779/ai-hub/releases/download/v1.0.92/AI.Hub_1.0.92_x64-setup.exe"
+    "notes": "# AI Hub 1.0.93\n\n这一版把 1.0.92 的更新链与启动修复收进正式发布，并修掉设置页两处实际问题。\n\n## 更新：任意目录、任意机器都能完成\n\n- 1.0.90 / 1.0.91 的更新有一个确定的回归：下载到 100% 后要写 `%LOCALAPPDATA%\\ai-hub\\state\\download`，却没有先创建这个目录。目录不存在时最后一步报 `写入错误: 系统找不到指定的路径。 (os error 3)`，而续传文件已在下载完成时删掉 —— 点「重试」只会重下 218MB 再失败。\n- 1.0.92 起：下载前先确保目录可创建、可写；主目录不可用就回退到 `temp\\download`，并把**实际路径**记进更新状态；写最终文件前再做磁盘空间与父目录预检。失败文案会给出目标路径、原因和「手动下载」出口。\n- 续传判断改为以磁盘上真实存在的残留为准；路径类错误不会被伪装成“可继续下载”。\n- 新增「陈旧目标」清理：手动装上新版本后，旧的待安装目标会被清掉。\n\n## 升级路径（重要）\n\n- **1.0.90 / 1.0.91 无法远程完成这次安装**：缺陷已经在已发布的二进制里，新清单不能替它创建目录。请手动下载并安装一次 1.0.93。\n- **1.0.92 可以直接自动升级到 1.0.93**（更新清单里的 `asset_url` 直链已生效）。\n- 1.0.92 起，清单同时提供 `url`（发布页，给旧客户端打开浏览器）与 `asset_url`（安装包直链）。1.0.92+ 自动走直链下载、校验、静默安装、自动重启。\n- 签名清单的管理台出口排第一；该出口 304 或内容损坏时会继续尝试 raw GitHub / jsDelivr。\n- 安装包未做 Authenticode 签名。\n\n## 诊断数据：始终开启\n\n- 移除设置页的「匿名诊断数据」开关。产品需要完整、连续的诊断才能定位真实机器上的问题；旧版本里关过诊断的机器，升级后自动恢复上报。\n- 采集边界不变：只发送匿名安装 ID、设备名/型号、系统版本与结构化事件（启动结果、命令失败、渲染错误、帧账、点击区域等）；**提示词、对话、API Key、令牌、本机路径、agent 名一律不采集**。\n- 仅保留 `AI_HUB_TELEMETRY=0/off` 作为开发/测试环境的急停开关，界面上没有关闭入口。\n\n## CLI 版本管理\n\n- 「操作」列不再显示 `unavailable` / `timeout` 这类原始键名：查询失败显示「版本查询失败」，超时显示「版本查询超时」。\n- 「检查更新」一次批量往返，超时与“离线无缓存”分别给出不同文案；超时时若本地有缓存仍可看到旧列表。\n\n## 启动：点击即响应，结局可见\n\n- 点「启动」立刻返回，卡片先进入启动中；真实结局由 `aihub://launch-state` 事件补齐：`ready` 收起转圈，`failed` 直接把后端原文显示在卡片上的红色错误条里。\n- 迟到的旧事件会被丢弃：连点两次不会出现“后一次刚起来、前一次的失败又把卡片刷红”。\n- 已知边界：状态事件只在发生那一刻推送。启动期间若切换页面或关闭面板，可能错过终态；重新点一次启动即可（后端会清掉上一次终态并重新开始）。不会自动重发任何任务。",
+    "asset_url": "https://github.com/lc779/ai-hub/releases/download/v1.0.93/AI.Hub_1.0.93_x64-setup.exe"
   },
   "telemetry_url": "https://aihub-admin.pages.dev"
 }
