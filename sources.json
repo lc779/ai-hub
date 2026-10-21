@@ -3,7 +3,7 @@
     "https://registry.npm.taobao.org",
     "https://ghproxy.cc/"
   ],
-  "expires_at": 1808159257,
+  "expires_at": 1808168925,
   "github_prefixes": [
     {
       "note": "",
@@ -18,7 +18,7 @@
       "url": "https://ghproxy.net/"
     }
   ],
-  "issued_at": 1792607257,
+  "issued_at": 1792616925,
   "next_keys": [
     "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo=",
     "k4-20261022:lGGMrAlb4VtPswPkOMisPYY05vMq3Ik2G12rCoVYEoU="
@@ -52,24 +52,25 @@
     }
   ],
   "schema": 1,
-  "serial": 14,
+  "serial": 15,
   "app_update": {
     "repo": "lc779/ai-hub",
-    "release_page": "https://github.com/lc779/ai-hub/releases",
-    "version": "1.0.91",
-    "name": "AI.Hub_1.0.91_x64-setup.exe",
-    "url": "https://github.com/lc779/ai-hub/releases/download/v1.0.91/AI.Hub_1.0.91_x64-setup.exe",
-    "sha256": "c55790ba848569aa78635c42910c44bc1aa4bbb1e12d4f0506d8c83937f1d7c0",
-    "size": 218543264,
+    "release_page": "https://github.com/lc779/ai-hub/releases/tag/v1.0.92",
+    "version": "1.0.92",
+    "name": "AI.Hub_1.0.92_x64-setup.exe",
+    "url": "https://github.com/lc779/ai-hub/releases/tag/v1.0.92",
+    "sha256": "9aa89f6e834703fa21081e73a4f682bb69931c609627cbd2d1add8d7f2d898f7",
+    "size": 218530968,
     "forced": false,
-    "release_id": "1.0.91",
+    "release_id": "1.0.92",
     "channel": "stable",
     "state": "active",
     "rollout": 100,
     "min_app_version": "1.0.84",
     "rollback": false,
     "rollback_from": [],
-    "notes": "# AI Hub 1.0.91\n\n这次只改更新体验，不动更新链本身。\n\n## 修复\n\n- **设置页不再常驻「未检查 / 检查更新」卡片。** 日常检查更新、已是最新、以及后台检查失败都不再占用界面；只有真的发现新版本、需要你决定是否下载，或下载/安装失败需要重试时，才会出现提示。\n- 修正更新提示里的版本号重复前缀（例如 `vv1.0.91`）。\n- 构建闸门改为按编号选择最新的前端校验脚本，避免干净检出时误跑旧校验。\n\n## 升级\n\n- 1.0.90 可以直接升级到 1.0.91；更新清单、签名与安装流程与 1.0.90 相同。\n- 安装包未做 Authenticode 签名。"
+    "notes": "1.0.92：点「启动」立刻有反应（真实结局由 aihub://launch-state 事件补齐，失败原文直接显示在卡片上）；CLI 版本检查改一次批量往返，超时与离线分开文案。永不强制重启，任意旧版都可直更到本版。",
+    "asset_url": "https://github.com/lc779/ai-hub/releases/download/v1.0.92/AI.Hub_1.0.92_x64-setup.exe"
   },
   "telemetry_url": "https://aihub-admin.pages.dev"
 }
