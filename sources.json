@@ -3,7 +3,7 @@
     "https://registry.npm.taobao.org",
     "https://ghproxy.cc/"
   ],
-  "expires_at": 1808202353,
+  "expires_at": 1808208014,
   "github_prefixes": [
     {
       "note": "",
@@ -18,7 +18,7 @@
       "url": "https://ghproxy.net/"
     }
   ],
-  "issued_at": 1792650353,
+  "issued_at": 1792656014,
   "next_keys": [
     "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo=",
     "k4-20261022:lGGMrAlb4VtPswPkOMisPYY05vMq3Ik2G12rCoVYEoU="
@@ -52,7 +52,7 @@
     }
   ],
   "schema": 1,
-  "serial": 20,
+  "serial": 21,
   "app_update": {
     "repo": "lc779/ai-hub",
     "release_page": "https://github.com/lc779/ai-hub/releases/tag/v1.0.94",
@@ -65,7 +65,7 @@
     "forced": false,
     "release_id": "1.0.94",
     "channel": "stable",
-    "state": "active",
+    "state": "withdrawn",
     "rollout": 100,
     "min_app_version": "1.0.84",
     "rollback": false,
