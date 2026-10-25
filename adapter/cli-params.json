@@ -1,4 +1,9 @@
 {
+  "bundle_core": [
+    "claude.exe",
+    "node.exe",
+    "bash/"
+  ],
   "cli_specs": [],
   "issued_at": 1792183377,
   "next_keys": [
@@ -37,7 +42,8 @@
         "how": "Env",
         "value": "ANTHROPIC_MODEL"
       },
-      "native_output_ceiling": 32000
+      "native_output_ceiling": 32000,
+      "window_output_reserve": 128000
     },
     {
       "always_env": [],
