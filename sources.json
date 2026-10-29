@@ -3,7 +3,7 @@
     "https://registry.npm.taobao.org",
     "https://ghproxy.cc/"
   ],
-  "expires_at": 1808844854,
+  "expires_at": 1808847364,
   "github_prefixes": [
     {
       "note": "",
@@ -18,7 +18,7 @@
       "url": "https://ghproxy.net/"
     }
   ],
-  "issued_at": 1793292854,
+  "issued_at": 1793295364,
   "next_keys": [
     "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo=",
     "k4-20261022:lGGMrAlb4VtPswPkOMisPYY05vMq3Ik2G12rCoVYEoU="
@@ -52,18 +52,18 @@
     }
   ],
   "schema": 1,
-  "serial": 45,
+  "serial": 46,
   "app_update": {
     "repo": "lc779/ai-hub",
-    "release_page": "https://github.com/lc779/ai-hub/releases/tag/v1.0.118",
-    "version": "1.0.118",
-    "name": "AI.Hub_1.0.118_x64-setup.exe",
-    "url": "https://github.com/lc779/ai-hub/releases/tag/v1.0.118",
-    "asset_url": "https://github.com/lc779/ai-hub/releases/download/v1.0.118/AI.Hub_1.0.118_x64-setup.exe",
-    "sha256": "b39806dc6f2a7ad8a9c8fd0ea0172249db677f302a95dae55a608b4a2ff1c625",
-    "size": 220112803,
+    "release_page": "https://github.com/lc779/ai-hub/releases/tag/v1.0.119",
+    "version": "1.0.119",
+    "name": "AI.Hub_1.0.119_x64-setup.exe",
+    "url": "https://github.com/lc779/ai-hub/releases/tag/v1.0.119",
+    "asset_url": "https://github.com/lc779/ai-hub/releases/download/v1.0.119/AI.Hub_1.0.119_x64-setup.exe",
+    "sha256": "3def8c1d190b90d9af93898b867180c83a7f867cb0c5676f920401e12776c08a",
+    "size": 220103554,
     "forced": false,
-    "release_id": "1.0.118",
+    "release_id": "1.0.119",
     "channel": "stable",
     "state": "active",
     "rollout": 100,
