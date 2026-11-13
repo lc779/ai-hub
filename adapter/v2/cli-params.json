@@ -1,7 +1,7 @@
 {
   "schema": 2,
-  "serial": 2,
-  "issued_at": 1794344211,
+  "serial": 3,
+  "issued_at": 1794552761,
   "min_app_version": "2.1.0",
   "next_keys": [
     "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo="
@@ -10,9 +10,10 @@
     {
       "builtin_fingerprint": "b1c15ba9e690f98020d48b523d19638a9bc9433c0d17f6eec277d71b125ae339",
       "app_versions": [
-        "2.1.x"
+        "2.1.x",
+        "2.2.x"
       ],
-      "issued_at": 1794344211,
+      "issued_at": 1794552761,
       "params": [
         {
           "always_env": [],
