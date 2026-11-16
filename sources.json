@@ -4,7 +4,7 @@
     "https://ghproxy.cc/",
     "https://ghproxy.net/"
   ],
-  "expires_at": 1810368006,
+  "expires_at": 1810399651,
   "github_prefixes": [
     {
       "note": "",
@@ -23,7 +23,7 @@
       "url": "https://aihub-admin.pages.dev/gh?u="
     }
   ],
-  "issued_at": 1794816006,
+  "issued_at": 1794847651,
   "next_keys": [
     "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo=",
     "k4-20261022:lGGMrAlb4VtPswPkOMisPYY05vMq3Ik2G12rCoVYEoU="
@@ -57,18 +57,18 @@
     }
   ],
   "schema": 1,
-  "serial": 63,
+  "serial": 64,
   "app_update": {
     "repo": "lc779/ai-hub",
-    "release_page": "https://github.com/lc779/ai-hub/releases/tag/v2.3.0",
-    "version": "2.3.0",
-    "name": "AI.Hub_2.3.0_x64-setup.exe",
-    "url": "https://github.com/lc779/ai-hub/releases/tag/v2.3.0",
-    "asset_url": "https://github.com/lc779/ai-hub/releases/download/v2.3.0/AI.Hub_2.3.0_x64-setup.exe",
-    "sha256": "a4fbe300017af0e2772b42bdba333d6edefe63b3ccae0ebdae3d919107364524",
-    "size": 7300007,
+    "release_page": "https://github.com/lc779/ai-hub/releases/tag/v2.3.1",
+    "version": "2.3.1",
+    "name": "AI.Hub_2.3.1_x64-setup.exe",
+    "url": "https://github.com/lc779/ai-hub/releases/tag/v2.3.1",
+    "asset_url": "https://github.com/lc779/ai-hub/releases/download/v2.3.1/AI.Hub_2.3.1_x64-setup.exe",
+    "sha256": "17d72c7cdb3973f613a057e5c99d19b4e2684b81692a17f3bbb08540dc51f918",
+    "size": 7317486,
     "forced": false,
-    "release_id": "2.3.0",
+    "release_id": "2.3.1",
     "channel": "stable",
     "state": "active",
     "rollout": 100,
