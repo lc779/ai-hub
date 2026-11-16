@@ -11,7 +11,8 @@
       "builtin_fingerprint": "b1c15ba9e690f98020d48b523d19638a9bc9433c0d17f6eec277d71b125ae339",
       "app_versions": [
         "2.1.x",
-        "2.2.x"
+        "2.2.x",
+        "2.3.x"
       ],
       "issued_at": 1794552761,
       "params": [
