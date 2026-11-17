@@ -1,7 +1,7 @@
 {
   "schema": 2,
-  "serial": 3,
-  "issued_at": 1794552761,
+  "serial": 4,
+  "issued_at": 1794980000,
   "min_app_version": "2.1.0",
   "next_keys": [
     "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo="
@@ -12,7 +12,8 @@
       "app_versions": [
         "2.1.x",
         "2.2.x",
-        "2.3.x"
+        "2.3.x",
+        "2.4.x"
       ],
       "issued_at": 1794552761,
       "params": [
