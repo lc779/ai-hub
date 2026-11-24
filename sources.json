@@ -4,7 +4,7 @@
     "https://ghproxy.cc/",
     "https://ghproxy.net/"
   ],
-  "expires_at": 1810987165,
+  "expires_at": 1811058068,
   "github_prefixes": [
     {
       "note": "",
@@ -23,7 +23,7 @@
       "url": "https://aihub-admin.pages.dev/gh?u="
     }
   ],
-  "issued_at": 1795435165,
+  "issued_at": 1795506068,
   "next_keys": [
     "k2-20261016:bcoia7OpTN3MYkz3GQrL3HygUARYBry2cQT+1jBEAoo=",
     "k4-20261022:lGGMrAlb4VtPswPkOMisPYY05vMq3Ik2G12rCoVYEoU="
@@ -57,18 +57,18 @@
     }
   ],
   "schema": 1,
-  "serial": 94,
+  "serial": 95,
   "app_update": {
     "repo": "lc779/ai-hub",
-    "release_page": "https://github.com/lc779/ai-hub/releases/tag/v2.4.21",
-    "version": "2.4.21",
-    "name": "AI.Hub_2.4.21_x64-setup.exe",
-    "url": "https://github.com/lc779/ai-hub/releases/tag/v2.4.21",
-    "asset_url": "https://github.com/lc779/ai-hub/releases/download/v2.4.21/AI.Hub_2.4.21_x64-setup.exe",
-    "sha256": "f4e3799e3b4e311ea2e78357e1a47d3d2214dfcafe1563ed76029d5c98ed22e2",
-    "size": 7396042,
+    "release_page": "https://github.com/lc779/ai-hub/releases/tag/v2.4.22",
+    "version": "2.4.22",
+    "name": "AI.Hub_2.4.22_x64-setup.exe",
+    "url": "https://github.com/lc779/ai-hub/releases/tag/v2.4.22",
+    "asset_url": "https://github.com/lc779/ai-hub/releases/download/v2.4.22/AI.Hub_2.4.22_x64-setup.exe",
+    "sha256": "aa0f52a75fa5b2062542e478fbc65bb25550bd186cadf306fb7491efdd4d832d",
+    "size": 7397755,
     "forced": false,
-    "release_id": "2.4.21",
+    "release_id": "2.4.22",
     "channel": "stable",
     "state": "active",
     "rollout": 100,
